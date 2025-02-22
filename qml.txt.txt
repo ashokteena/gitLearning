@@ -1,0 +1,34 @@
+
+// string and stringlist
+#include <QCoreApplication>
+#include <QStringList>
+#include <QDebug>
+
+int main(int argc, char *argv[])
+{
+    QCoreApplication a(argc, argv);
+    QString Temp1 = "India, Usa, China, Israel";
+    QStringList country = Temp1.split(",");
+    qDebug() << country;
+    QStringList tempe2;
+    tempe2 << "ashok";
+    tempe2 << "miraclin";
+    tempe2 << "betsy";
+    qDebug() << tempe2;
+    qDebug() << "after remove item 2";
+    tempe2.remove(2);
+    qDebug() << tempe2;
+    QStringList newlist;
+    for(int i=0;i<country.length();i++)
+    {
+        if(newlist.contains(country[i]) == false)
+        {
+            newlist.append(country[i]);
+        }
+    }
+    newlist.join("england");
+    qDebug() << "newlist" << "\n"<< newlist;
+
+
+    return a.exec();
+}
