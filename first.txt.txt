@@ -1,3 +1,88 @@
 Ashok kumar
 Miraclin
 Betsy
+-----
+Jitin  to  Everyone 19:08
+Pipeline
+CI/CD
+CI - build and test
+CD -  Deployment
+YAML - Pipeline steps
+Stages - build=>Test=>Deploy
+Job - set of tasks
+Task - set of actions
+Agents - Machines to run pipeline steps
+
+Jitin  to  Everyone 19:21
+https://azuser2576mmllocal@dev.azure.com/azuser2576mmllocal/Repo-Test/_git/WebApplication7
+
+Jitin  to  Everyone 19:35
+$(nugetVersion)
+
+270955-Sajesh Rao  to  Everyone 19:43
+Sorry, My laptop got restarted . Rejoined now.
+
+270358-Karthikeyan  to  Everyone 19:44
+sure
+
+Jitin  to  Everyone 19:53
+if you face parallelism error:
+Organisation Setting => Billing =>Set up billing=> validate Subscription =>
+
+Jitin  to  Everyone 19:59
+https://azuredevopsdemogenerator.azurewebsites.net/?Name=Python&TemplateId=77369
+
+Jitin  to  Everyone 20:23
+pool:
+  name: Azure Pipelines
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+variables:
+  solution: '**\*.sln'
+
+steps:
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.4.1'
+  inputs:
+    versionSpec: 4.4.1
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: '$(Parameters.solution)'
+
+- task: VSBuild@1
+  displayName: 'Build solution'
+  inputs:
+    solution: '$(Parameters.solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)\\"'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+- task: VSTest@2
+  displayName: 'Test Assemblies'
+  inputs:
+    testAssemblyVer2: |
+     **\$(BuildConfiguration)\*test*.dll
+     !**\obj\**
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+    PublishSymbols: false
+  continueOnError: true
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: '$(Parameters.ArtifactName)'
+  condition: succeededOrFailed()
+https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/python-script-v0?view=azure-pipelines
+
+
+https://ust.zoom.us/j/93972041619 (Passcode: 245440)
